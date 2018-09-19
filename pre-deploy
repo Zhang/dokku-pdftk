@@ -1,13 +1,8 @@
 #!/usr/bin/env bash
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
-IMAGE=$(docker images | grep "user/repo" | awk '{print $3}')
-if [[ -z $IMAGE ]]; then
-    dokku_log_fail "user/repo image not found... Did you run 'dokku plugin:install'?"
-fi
 
-APP="$1"; IMAGE="dokku/$APP"
-echo "-----> Installing pdftk ..."
+echo "-----> Installing ghostscript ..."
 apt-get -y update
-apt-get install pdftk
-echo "-----> pdftk installed!"
+sudo apt-get install ghostscript
+echo "-----> ghostscript installed!"
 sleep 1 # wait so that docker run has not exited before docker attach
